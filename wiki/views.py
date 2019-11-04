@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from wiki.models import Page
-from django.views import DetailView, ListView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 # Create your views here.
-
 
 class PageList(ListView):
     """
@@ -12,11 +12,14 @@ class PageList(ListView):
       3. Replace pass below with the code to render a template named `list.html`.
     """
     model = Page
+    template_name = 'list.html'
 
-    def get(self, request, username, slug):
+    def get(self, request):
         """ Returns a list of wiki pages. """
-        pass
-
+        context = {
+          'wikis': Page.objects.all()
+        }
+        return render(request, 'list.html', context=context)
 
 class PageDetailView(DetailView):
     """
