@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for wiki in wikis %}
-        <h2><a href='{{ wiki.slug }}'>{{ wiki.title }}</a></h2>
-        <p>Published by: {{ wiki.author }}</p>
-        <p>Created at: {{ wiki.created }}</p>
-    {% endfor %}
+
+{% for wiki in wikis %}
+    <h2><a href='w/{{ wiki.slug }}'>{{ wiki.title }}</a></h2>
+{% endfor %}
+
 {% endblock %}

@@ -14,4 +14,6 @@ from . import views
 urlpatterns = [
     path('', views.PageList.as_view(), name='wiki-list-page'),
     path('w/<slug>', views.PageDetailView.as_view(), name='wiki-details-page'),
+    path('w/<slug>/edit', views.PageDetailView.as_view(), name='wiki-form-submission'),
+
 ]

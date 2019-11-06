@@ -2,6 +2,7 @@ from django.shortcuts import render
 from wiki.models import Page
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from .forms import PageForm
 # Create your views here.
 
 class PageList(ListView):
@@ -25,7 +26,7 @@ class PageDetailView(DetailView):
     """
     CHALLENGES:
       1. On GET, render a template named `page.html`.
-      2. Replace this docstring with a description of what thos accomplishes.
+      2. Replace this docstring with a description of what this accomplishes.
 
     STRETCH CHALLENGES:
       1. Import the PageForm class from forms.py.
@@ -42,7 +43,10 @@ class PageDetailView(DetailView):
 
     def get(self, request, slug):
         """ Returns a specific of wiki page by slug. """
-        pass
+        context = {
+          'wiki': Page.objects.get(slug=slug)
+        }
+        return render(request, 'page.html', context=context)
 
     def post(self, request, slug):
         pass
