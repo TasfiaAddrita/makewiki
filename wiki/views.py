@@ -1,26 +1,43 @@
-from django.shortcuts import render
-from wiki.models import Page
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from .forms import PageForm
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    ListView,
+    UpdateView,
+    ListView,
+    DeleteView
+)
+from .models import Page
+from .forms import PageModelForm
+
 # Create your views here.
 
-class PageList(ListView):
+class PageCreateView(CreateView):
+    template_name = 'page_update.html'
+    form_class = PageModelForm
+    queryset = Page.objects.all()
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+class PageListView(ListView):
     """
     CHALLENGES:
       1. On GET, display a homepage that shows all Pages in your wiki.
       2. Replace this CHALLENGE text with a descriptive docstring for PageList.
       3. Replace pass below with the code to render a template named `list.html`.
     """
-    model = Page
-    template_name = 'list.html'
+    # model = Page
+    template_name = 'page_list.html'
+    queryset = Page.objects.all()
 
-    def get(self, request):
-        """ Returns a list of wiki pages. """
-        context = {
-          'wikis': Page.objects.all()
-        }
-        return render(request, 'list.html', context=context)
+    # def get(self, request):
+    #     """ Returns a list of wiki pages. """
+    #     context = {
+    #       'wikis': Page.objects.all()
+    #     }
+    #     return render(request, 'list.html', context=context)
 
 class PageDetailView(DetailView):
     """
@@ -40,13 +57,28 @@ class PageDetailView(DetailView):
            - Message Content: REPLACE_WITH_PAGE_TITLE has been successfully updated.
     """
     model = Page
+    template_name = 'page_detail.html'
+    # queryset = Page.objects.all()
 
-    def get(self, request, slug):
-        """ Returns a specific of wiki page by slug. """
-        context = {
-          'wiki': Page.objects.get(slug=slug)
-        }
-        return render(request, 'page.html', context=context)
+    # def get(self, request, slug):
+    #     """ Returns a specific of wiki page by slug. """
+    #     context = {
+    #       'wiki': Page.objects.get(slug=slug),
+    #     }
+    #     return render(request, 'page.html', context=context)
 
-    def post(self, request, slug):
-        pass
+    def get_object(self):
+        slug = self.kwargs.get("slug")
+        return get_object_or_404(Page, slug=slug)
+
+class PageUpdateView(UpdateView):
+    template_name = 'page_update.html'
+    form_class = PageModelForm
+
+    def get_object(self):
+        slug = self.kwargs.get("slug")
+        return get_object_or_404(Page, slug=slug)
+    
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)

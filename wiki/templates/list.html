@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
-{% for wiki in wikis %}
-    <h2><a href='w/{{ wiki.slug }}'>{{ wiki.title }}</a></h2>
-{% endfor %}
-
-{% endblock %}

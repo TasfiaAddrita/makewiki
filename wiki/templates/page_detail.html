@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ object.title }} by {{ object.author }}</h1>
+<h5>Last modified at {{ object.modified }} // Created at {{ object.created }}</h5>
+<p>{{ object.content }}</p>
+
+<a href="/wiki/{{ object.slug }}/edit">Edit Page</a>
+
+{% endblock %}

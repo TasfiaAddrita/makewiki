@@ -26,8 +26,9 @@ class Page(models.Model):
 
     def get_absolute_url(self):
         """ Returns a fully-qualified path for a page (/droxey/my-new-wiki-page). """
-        path_components = {'username': self.username, 'slug': self.slug}
-        return reverse('wiki-page', kwargs=path_components)
+        # path_components = {'author': self.author, 'slug': self.slug}
+        path_components = {'slug': self.slug}
+        return reverse('wiki:wiki-details-page', kwargs=path_components)
 
     def save(self, *args, **kwargs):
         """ Creates a URL safe slug automatically when a new a page is created. """

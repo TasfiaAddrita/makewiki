@@ -11,9 +11,12 @@ from . import views
       - Test by visiting http://127.0.0.1:8000/w/title-but-replace-spaces-with-dashes in your browser.
   """
 
+app_name = 'wiki'
+
 urlpatterns = [
-    path('', views.PageList.as_view(), name='wiki-list-page'),
-    path('w/<slug>', views.PageDetailView.as_view(), name='wiki-details-page'),
-    path('w/<slug>/edit', views.PageDetailView.as_view(), name='wiki-form-submission'),
+    path('', views.PageListView.as_view(), name='wiki-list-page'),
+    path('create/', views.PageCreateView.as_view(), name='wiki-create-page'),
+    path('<slug>', views.PageDetailView.as_view(), name='wiki-details-page'),
+    path('<slug>/edit', views.PageUpdateView.as_view(), name='wiki-update-page'),
 
 ]
